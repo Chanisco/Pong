@@ -11,6 +11,7 @@ public class Playermovement : MonoBehaviour {
 	private bool assigment = false;
 
 	void Start(){
+		movingSpeed = 10;
 		GetAssigment();
 	}
 	void Update () {

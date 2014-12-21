@@ -4,7 +4,8 @@ using System.Collections;
 public class BallPhysics : MonoBehaviour {
 	private float maxTop = 5f;
 	private float maxBot = -4f;
-	private float speed = 5;
+	private float speedX = 5;
+	private float speedY = 5;
 
 	//true == Left false == right
 	public bool directionX;
@@ -22,19 +23,33 @@ public class BallPhysics : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 		ChangeXDirection();
-		speed = col.collider.GetComponent<Playermovement>().movingSpeed;
+		if(col.collider.name == "Player"){
+			float playerY = col.collider.transform.position.y;
+			float difference = transform.position.y - playerY;
+			float altitude;
+			if(difference > 0.9f || difference < -0.9f){
+				altitude = 1;
+			}else if(difference > 0.5f || difference < -0.5f){
+				altitude = 0.5f;
+			}else{
+				altitude = 0.1f;
+			}
+		
+			speedX = col.collider.GetComponent<Playermovement>().movingSpeed;
+			speedY = speedX * altitude;
+		}
 	}
 
 	void Movement(bool dirX,bool dirY){
 		if(dirX){
-			transform.Translate(-speed * Time.deltaTime,0,0);
+			transform.Translate(-speedX * Time.deltaTime,0,0);
 		}else{
-			transform.Translate(speed * Time.deltaTime,0,0);
+			transform.Translate(speedX * Time.deltaTime,0,0);
 		}
 		if(dirY){
-			transform.Translate(0,-speed * Time.deltaTime,0);
+			transform.Translate(0,-speedY * Time.deltaTime,0);
 		}else{
-			transform.Translate(0,speed * Time.deltaTime,0);
+			transform.Translate(0,speedY * Time.deltaTime,0);
 		}
 	}
 
@@ -47,8 +62,6 @@ public class BallPhysics : MonoBehaviour {
 
 
 	}
-
-
 	void HittingBorders(){
 		if(transform.position.y > maxTop){
 			directionY = true;
@@ -71,33 +84,10 @@ public class BallPhysics : MonoBehaviour {
 			}
 		}
 		if(goingBack == true){
-			Goto (new Vector2(0,0));
+			Management.ball = false;
+			goingBack = false;
+			GameObject.Destroy(gameObject);
+			//Goto (new Vector2(0,0));
 		}
-	}
-	void Goto(Vector2 newPosition){
-		transform.collider.isTrigger = true;
-		if(transform.position.x < newPosition.x){
-			transform.Translate(10 * Time.deltaTime,0,0);
-			if(transform.position.x > newPosition.x){
-				Invoke("ReturnToNormal",3);
-			}
-		}else if(transform.position.x > newPosition.x){
-			transform.Translate(-10 * Time.deltaTime,0,0);
-			if(transform.position.x < newPosition.x){
-				Invoke("ReturnToNormal",3);
-			}
-		}
-		if(transform.position.y > newPosition.y){
-			transform.Translate(0,-10 * Time.deltaTime,0);
-		}
-		if(transform.position.y < newPosition.y){
-			transform.Translate(0,10 * Time.deltaTime,0);
-		}
-	}
-
-	void ReturnToNormal(){
-		transform.collider.isTrigger = false;
-		speed = 5;
-		goingBack = false;
 	}
 }
