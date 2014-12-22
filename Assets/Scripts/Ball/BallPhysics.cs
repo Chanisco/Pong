@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class BallPhysics : MonoBehaviour {
-	private float maxTop = 6f;
-	private float maxBot = -4f;
+	private float maxTop = 12.5f;
+	private float maxBot = -11f;
 	private float speedX = 5;
 	private float speedY = 5;
 
@@ -71,13 +71,13 @@ public class BallPhysics : MonoBehaviour {
 		}
 	}
 	void CheckPoints(){
-		if(transform.position.x > 10){
+		if(transform.position.x > 23){
 			if(goingBack == false){
 				goingBack = true;
 				Global.RightPoints += 1;
 			}
 		}
-		if(transform.position.x < -10){
+		if(transform.position.x < -23){
 			if(goingBack == false){
 				goingBack = true;
 				Global.LeftPoints += 1;

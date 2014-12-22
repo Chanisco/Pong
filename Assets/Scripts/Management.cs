@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Management : MonoBehaviour {
 	Transform[] Pieces;
-	private bool player1,player2;
+	private bool player1,player2,player3,player4,Enemy;
 	public static bool ball = false;
 	private GameObject _player;
 	private GameObject _ball;
@@ -20,6 +20,11 @@ public class Management : MonoBehaviour {
 		if(ball == false){
 			ball = true;
 			Invoke("newBall",3);
+		}
+		if(Global.LeftPoints > 5){
+			Application.LoadLevel("LeftWins");
+		}else if(Global.RightPoints > 5){
+			Application.LoadLevel("RightWins");
 		}
 	}
 
@@ -38,18 +43,57 @@ public class Management : MonoBehaviour {
 			if(Pieces[Pieces.Length - 1]){
 				if(Global.WantedPlayers == 3){
 					if(player1 == false){
-						_player = Instantiate(_player,new Vector3(-9f,0,0),Quaternion.identity) as GameObject;
+						_player = Instantiate(_player,new Vector3(-21f,0,0),Quaternion.identity) as GameObject;
 						_player.transform.parent = transform;
 						_player.name = "Player";
 						player1 = true;
 					}
 					
 					if(player2 == false){
-						_player = Instantiate(_player,new Vector3(9f,0,0),Quaternion.identity) as GameObject;
+						_player = Instantiate(_player,new Vector3(21f,0,0),Quaternion.identity) as GameObject;
 						_player.transform.parent = transform;
 						_player.name = "Player";
 						player2 = true;
 					}
+				}else if(Global.WantedPlayers == 4){
+					if(player1 == false){
+						_player = Instantiate(_player,new Vector3(-21f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.name = "Player";
+						player1 = true;
+					}
+					
+					if(player2 == false){
+						_player = Instantiate(_player,new Vector3(-7f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.name = "Player";
+						player2 = true;
+					}
+					if(player3 == false){
+						_player = Instantiate(_player,new Vector3(7.5f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.name = "Player";
+						player3 = true;
+					}
+					
+					if(Enemy == false){
+						_player = Instantiate(_player,new Vector3(-7.5f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.renderer.material.color = new Color(100,0,0);
+						_player.name = "Player";
+						
+						_player = Instantiate(_player,new Vector3(7f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.renderer.material.color = new Color(100,0,0);
+						_player.name = "Player";
+						
+						_player = Instantiate(_player,new Vector3(21f,0,0),Quaternion.identity) as GameObject;
+						_player.transform.parent = transform;
+						_player.renderer.material.color = new Color(100,0,0);
+						_player.name = "Player";
+						Enemy = true;
+					}
+
 				}
 				break;
 			}

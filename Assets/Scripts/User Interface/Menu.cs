@@ -35,14 +35,13 @@ public class Menu : MonoBehaviour {
 		}
 
 		if(GUI.Button(playerBtnRect,playerBtn,GUIStyle.none)){
-			if(Global.WantedPlayers < 5){
+			if(Global.WantedPlayers < 4){
 				Global.WantedPlayers += 1;
 				if(Global.WantedPlayers == 3){
 					numberOfPlayers = TwoText;
 				}else if(Global.WantedPlayers == 4){
 					numberOfPlayers = ThreeText;
-				}else if(Global.WantedPlayers == 5){
-					numberOfPlayers = FourText;
+					Global.Vs = "Player";
 				}
 			}else{
 				Global.WantedPlayers = 3;
@@ -51,24 +50,26 @@ public class Menu : MonoBehaviour {
 		}
 		GUI.Label(numberPlayerRect,numberOfPlayers);
 
-		if(GUI.Button(vsBtnRect,vsBtn,GUIStyle.none)){
-			if(Global.Vs == "Computer" && Global.Difficulty == "Hard"){
-				Global.Vs = "Player";
-				vsBtn = vsPlayerBtn;
-			}else{
-				Global.Vs = "Computer";
-				vsBtn = vsAIBtn;
-				if(Global.Difficulty == "Easy"){
-					Global.Difficulty = "Hard";
-					vsDiffi = HardText;
+		if(Global.WantedPlayers == 3){
+			if(GUI.Button(vsBtnRect,vsBtn,GUIStyle.none)){
+				if(Global.Vs == "Computer" && Global.Difficulty == "Hard"){
+					Global.Vs = "Player";
+					vsBtn = vsPlayerBtn;
 				}else{
-					Global.Difficulty = "Easy";
-					vsDiffi = EasyText;
+					Global.Vs = "Computer";
+					vsBtn = vsAIBtn;
+					if(Global.Difficulty == "Easy"){
+						Global.Difficulty = "Hard";
+						vsDiffi = HardText;
+					}else{
+						Global.Difficulty = "Easy";
+						vsDiffi = EasyText;
+					}
 				}
 			}
-		}
-		if(Global.Vs == "Computer"){
-			GUI.Label(vsDiffiRect,vsDiffi);
+			if(Global.Vs == "Computer"){
+				GUI.Label(vsDiffiRect,vsDiffi);
+			}
 		}
 		if(Counting == true && Timer > 0){
 			GUI.Label(outputRect,"Game is startin in " + Timer.ToString());

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public static class Global {
 
 	public static List<int> PlayerCount = new List<int>{
-		1,2
+		1,2,3
 	};
 	public static int WantedPlayers = 3;
 

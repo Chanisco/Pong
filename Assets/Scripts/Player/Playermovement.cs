@@ -2,28 +2,28 @@
 using System.Collections;
 
 public class Playermovement : MonoBehaviour {
-	private float maxTop = 5f;
-	private float maxBot = -3f;
+	private float maxTop = 11f;
+	private float maxBot = -9f;
 	private int speed = 15;
 	public float movingSpeed;
 	public int playerNumber = 0;
 	public KeyCode up,down;
 	private bool assigment = false;
-	private bool CPU = false;
+	public bool CPU = false;
 	private int difficultySpeed;
 
 	void Start(){
 		if(Global.Vs == "Computer"){
 			if(Global.Difficulty == "Hard"){
-				difficultySpeed = 15;
-				speed = 20;
+				difficultySpeed = 40;
+				speed = 50;
 			}else{
-				difficultySpeed = 10;
-				speed = 5;
+				difficultySpeed = 30;
+				speed = 25;
 			}
 		}else{
-			difficultySpeed = 15;
-			speed = 15;
+			difficultySpeed = 20;
+			speed 			= 20;
 		}
 		movingSpeed = difficultySpeed;
 		GetAssigment();
@@ -67,38 +67,38 @@ public class Playermovement : MonoBehaviour {
 	}
 
 	void GetAssigment(){
-		if(Global.WantedPlayers > Global.PlayerCount.Count && assigment == false){
-			playerNumber = Global.PlayerCount[0];
-			Global.PlayerCount.RemoveAt(0);
-			assigment = true;
-			SetButtons();
+		if(assigment == false){
+			if(Global.PlayerCount.Count != 0){
+				playerNumber = Global.PlayerCount[0];
+				Global.PlayerCount.RemoveAt(0);
+				assigment = true;
+				SetButtons();
+			}else{
+				CPU = true;
+			}
 		}
 	}
 
 	void SetButtons(){
 		if(assigment == true){
 			if(playerNumber == 1){
-				up = KeyCode.W;
-				down = KeyCode.S;
+				up 			= KeyCode.W;
+				down 		= KeyCode.S;
 
 			}
 			if(Global.Vs == "Player"){
 				if(playerNumber == 2){
-					up = KeyCode.UpArrow;
-					down = KeyCode.DownArrow;
+					up 		= KeyCode.UpArrow;
+					down 	= KeyCode.DownArrow;
 				}
 				if(playerNumber == 3){
-					up = KeyCode.Keypad9;
-					down = KeyCode.Keypad8;
-				}
-				
-				if(playerNumber == 4){
-
+					up 		= KeyCode.Keypad9;
+					down 	= KeyCode.Keypad8;
 				}
 			}else if(Global.Vs == "Computer" && playerNumber != 1){
 				CPU = true;
 				if(Global.Difficulty == "Hard"){
-					speed = 15;
+					speed = 40;
 				}
 			}
 		}
@@ -109,7 +109,7 @@ public class Playermovement : MonoBehaviour {
 		if(Ball != null){
 			float BallY = Ball.transform.position.y;
 			float BallX = Ball.transform.position.x;
-			if(BallX > transform.position.x - 5){
+			if(BallX > transform.position.x - 10 && Ball.GetComponent<BallPhysics>().directionX == false){
 				if(BallY - transform.position.y > 1 + (Random.Range(0,3) / 10)|| BallY - transform.position.y < -1 - (Random.Range(0,3) / 10)){
 					if(BallY <= transform.position.y){	
 						Movement("down",speed,transform);
