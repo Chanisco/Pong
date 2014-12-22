@@ -9,9 +9,16 @@ public class Management : MonoBehaviour {
 	private GameObject _ball;
 
 
-	void Start () {
+	void Awake () {
 		_ball 	= Resources.Load("Ball") as GameObject;
 		_player = Resources.Load("Player") as GameObject;
+		Global.LeftPoints = 0;
+		Global.RightPoints = 0;
+		player1 = false;
+		player2 = false;
+		player3 = false;
+		player4 = false;
+		ball 	= false;
 		Checks();
 	}
 
@@ -22,9 +29,9 @@ public class Management : MonoBehaviour {
 			Invoke("newBall",3);
 		}
 		if(Global.LeftPoints > 5){
-			Application.LoadLevel("LeftWins");
-		}else if(Global.RightPoints > 5){
 			Application.LoadLevel("RightWins");
+		}else if(Global.RightPoints > 5){
+			Application.LoadLevel("LeftWins");
 		}
 	}
 

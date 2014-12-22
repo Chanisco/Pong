@@ -12,7 +12,7 @@ public class Scores : MonoBehaviour {
 		GUI.Label(leftPointsRect,Global.LeftPoints.ToString());
 		GUI.Label(rightPointsRect,Global.RightPoints.ToString());
 
-		if(!Management.ball ){
+		if(!Management.ball){
 			puns = true;
 		}
 		if(shortTime <= 1){

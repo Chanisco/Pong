@@ -93,7 +93,7 @@ public class Playermovement : MonoBehaviour {
 				}
 				if(playerNumber == 3){
 					up 		= KeyCode.Keypad9;
-					down 	= KeyCode.Keypad8;
+					down 	= KeyCode.Keypad6;
 				}
 			}else if(Global.Vs == "Computer" && playerNumber != 1){
 				CPU = true;

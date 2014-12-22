@@ -12,6 +12,10 @@ public class BallPhysics : MonoBehaviour {
 	public bool directionY;
 	public bool goingBack;
 
+	public float volumeSFX;
+	public AudioClip SFX1,SFX2,SFX3,SFX4,SFX5;
+
+	
 	void Update () {
 		if(goingBack == false){
 			Movement(directionX,directionY);
@@ -23,6 +27,7 @@ public class BallPhysics : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 		if(col.collider.name == "Player"){
+			CollideSound();
 			float playerY = col.collider.transform.position.y;
 			float difference = transform.position.y - playerY;
 			float altitude;
@@ -62,6 +67,7 @@ public class BallPhysics : MonoBehaviour {
 
 
 	}
+
 	void HittingBorders(){
 		if(transform.position.y > maxTop){
 			directionY = true;
@@ -70,6 +76,7 @@ public class BallPhysics : MonoBehaviour {
 			directionY = false;
 		}
 	}
+
 	void CheckPoints(){
 		if(transform.position.x > 23){
 			if(goingBack == false){
@@ -77,16 +84,40 @@ public class BallPhysics : MonoBehaviour {
 				Global.RightPoints += 1;
 			}
 		}
+
 		if(transform.position.x < -23){
 			if(goingBack == false){
 				goingBack = true;
 				Global.LeftPoints += 1;
 			}
 		}
+
 		if(goingBack == true){
 			Management.ball = false;
 			goingBack = false;
 			GameObject.Destroy(gameObject);
 		}
+	}
+
+	void CollideSound(){
+		int switchStatement = Random.Range(1,5);
+		switch(switchStatement){
+		case 1:
+			AudioSource.PlayClipAtPoint(SFX1,new Vector3(0,0,0),volumeSFX);
+			break;
+		case 2:
+			AudioSource.PlayClipAtPoint(SFX2,new Vector3(0,0,0),volumeSFX);
+			break;
+		case 3:
+			AudioSource.PlayClipAtPoint(SFX3,new Vector3(0,0,0),volumeSFX);
+			break;
+		case 4:
+			AudioSource.PlayClipAtPoint(SFX4,new Vector3(0,0,0),volumeSFX);
+			break;
+		case 5:
+			AudioSource.PlayClipAtPoint(SFX5,new Vector3(0,0,0),volumeSFX);
+			break;
+		}
+		
 	}
 }
