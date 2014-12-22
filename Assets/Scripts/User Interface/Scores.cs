@@ -22,7 +22,6 @@ public class Scores : MonoBehaviour {
 		if(puns && shortTime > 0){
 			GUI.Label(middleRect,"OW SHIT THATS GONNA HURT");
 			shortTime -= 1;
-			Debug.Log("ShortTime = " + shortTime);
 		}
 	}
 }

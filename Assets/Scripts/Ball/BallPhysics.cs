@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BallPhysics : MonoBehaviour {
-	private float maxTop = 5f;
+	private float maxTop = 6f;
 	private float maxBot = -4f;
 	private float speedX = 5;
 	private float speedY = 5;
@@ -21,8 +21,7 @@ public class BallPhysics : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter(Collision col){
-		ChangeXDirection();
+	void OnTriggerEnter(Collider col){
 		if(col.collider.name == "Player"){
 			float playerY = col.collider.transform.position.y;
 			float difference = transform.position.y - playerY;
@@ -34,6 +33,7 @@ public class BallPhysics : MonoBehaviour {
 			}else{
 				altitude = 0.1f;
 			}
+			ChangeXDirection();
 		
 			speedX = col.collider.GetComponent<Playermovement>().movingSpeed;
 			speedY = speedX * altitude;
@@ -74,20 +74,19 @@ public class BallPhysics : MonoBehaviour {
 		if(transform.position.x > 10){
 			if(goingBack == false){
 				goingBack = true;
-				Global.LeftPoints += 1;
+				Global.RightPoints += 1;
 			}
 		}
 		if(transform.position.x < -10){
 			if(goingBack == false){
 				goingBack = true;
-				Global.RightPoints += 1;
+				Global.LeftPoints += 1;
 			}
 		}
 		if(goingBack == true){
 			Management.ball = false;
 			goingBack = false;
 			GameObject.Destroy(gameObject);
-			//Goto (new Vector2(0,0));
 		}
 	}
 }

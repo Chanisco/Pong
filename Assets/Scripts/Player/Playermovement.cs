@@ -5,17 +5,36 @@ public class Playermovement : MonoBehaviour {
 	private float maxTop = 5f;
 	private float maxBot = -3f;
 	private int speed = 15;
-	public float movingSpeed = 10;
+	public float movingSpeed;
 	public int playerNumber = 0;
-	private KeyCode up,down;
+	public KeyCode up,down;
 	private bool assigment = false;
+	private bool CPU = false;
+	private int difficultySpeed;
 
 	void Start(){
-		movingSpeed = 10;
+		if(Global.Vs == "Computer"){
+			if(Global.Difficulty == "Hard"){
+				difficultySpeed = 15;
+				speed = 20;
+			}else{
+				difficultySpeed = 10;
+				speed = 5;
+			}
+		}else{
+			difficultySpeed = 15;
+			speed = 15;
+		}
+		movingSpeed = difficultySpeed;
 		GetAssigment();
 	}
 	void Update () {
-		PlayerControlls(up,down);
+		if(CPU == false){
+			PlayerControlls(up,down);
+		}else{
+			Computer();
+		}
+
 
 	}
 
@@ -37,13 +56,13 @@ public class Playermovement : MonoBehaviour {
 	void PlayerControlls(KeyCode chosenUp,KeyCode chosenDown){
 		if(Input.GetKey(chosenUp)){
 			Movement("up",speed,transform);
-			movingSpeed += 30 * Time.deltaTime;
+			movingSpeed += 20 * Time.deltaTime;
 		}else if(Input.GetKey(chosenDown)){
 			Movement("down",speed,transform);
-			movingSpeed += 30 * Time.deltaTime;
+			movingSpeed += 20 * Time.deltaTime;
 		}
 		if(Input.GetKeyUp(chosenUp) || Input.GetKeyUp(chosenDown)){
-			movingSpeed = 10;
+			movingSpeed = difficultySpeed;
 		}
 	}
 
@@ -61,11 +80,43 @@ public class Playermovement : MonoBehaviour {
 			if(playerNumber == 1){
 				up = KeyCode.W;
 				down = KeyCode.S;
-				
+
 			}
-			if(playerNumber == 2){
-				up = KeyCode.UpArrow;
-				down = KeyCode.DownArrow;
+			if(Global.Vs == "Player"){
+				if(playerNumber == 2){
+					up = KeyCode.UpArrow;
+					down = KeyCode.DownArrow;
+				}
+				if(playerNumber == 3){
+					up = KeyCode.Keypad9;
+					down = KeyCode.Keypad8;
+				}
+				
+				if(playerNumber == 4){
+
+				}
+			}else if(Global.Vs == "Computer" && playerNumber != 1){
+				CPU = true;
+				if(Global.Difficulty == "Hard"){
+					speed = 15;
+				}
+			}
+		}
+	}
+
+	void Computer(){
+		GameObject Ball = GameObject.Find("Ball");
+		if(Ball != null){
+			float BallY = Ball.transform.position.y;
+			float BallX = Ball.transform.position.x;
+			if(BallX > transform.position.x - 5){
+				if(BallY - transform.position.y > 1 + (Random.Range(0,3) / 10)|| BallY - transform.position.y < -1 - (Random.Range(0,3) / 10)){
+					if(BallY <= transform.position.y){	
+						Movement("down",speed,transform);
+					}else{
+						Movement("up",speed,transform);
+					}
+				}
 			}
 		}
 	}
