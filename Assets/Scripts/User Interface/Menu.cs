@@ -8,10 +8,11 @@ public class Menu : MonoBehaviour {
 	private Rect numberPlayerRect 	= new Rect(225,120,50,100); 
 	private Rect vsBtnRect 			= new Rect(20,230,200,100); 
 	private Rect vsDiffiRect 		= new Rect(225,230,200,100); 
+	private Rect instructionsRect	= new Rect(500,120,500,400);
 	private Rect outputRect 		= new Rect(Screen.width - 150,Screen.height - 20,150,20); 
 
 	public 	Texture background,startBtn,playerBtn,vsAIBtn,vsPlayerBtn;
-	public 	Texture	OneText,TwoText,ThreeText,FourText;
+	public 	Texture	OneText,TwoText,ThreeText,FourText,instructText;
 	public 	Texture	EasyText,HardText;
 	private Texture vsBtn,numberOfPlayers,vsDiffi;
 
@@ -72,6 +73,7 @@ public class Menu : MonoBehaviour {
 			}
 		}
 		if(Counting == true && Timer > 0){
+			GUI.Label(instructionsRect,instructText);
 			GUI.Label(outputRect,"Game is startin in " + Timer.ToString());
 			Timer -= 1;
 		}
